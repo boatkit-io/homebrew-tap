@@ -1,63 +1,63 @@
 {
-  "id": "df21d7be1326889ff5d468fe7c4a83e3290e138870306d53a893b43b871aef41",
+  "id": "26283b9cf39a2d851a09713851178e0ed74ae54ca71dbefcf59f9909cb334662",
   "manifest": {
     "schemaVersion": 1,
     "name": "iotk",
-    "version": "0.0.0-dev.c9c1fcc1dd08",
-    "revision": "c9c1fcc1dd08c80e92a404f25dcc1953ae881a0d",
-    "sourceDateEpoch": 1793589989,
+    "version": "0.0.0-dev.eafd3adc73aa",
+    "revision": "eafd3adc73aa8532af226693ef324e57832b7084",
+    "sourceDateEpoch": 1793597718,
     "goVersion": "go1.27.1",
     "clean": true,
     "artifacts": [
       {
         "target": "darwin-amd64",
-        "file": "iotk-0.0.0-dev.c9c1fcc1dd08-darwin-amd64.tar.gz",
-        "size": 3996771,
-        "sha256": "a34fb4499065620fe0158b0ab9eb7b77166968d36e9717e9fc1fbed968613048",
-        "binarySha256": "b5d82ed5b446b2c8502be94b68cd2207c3e841a78cbff51954cb33f4d26506bb"
+        "file": "iotk-0.0.0-dev.eafd3adc73aa-darwin-amd64.tar.gz",
+        "size": 3996776,
+        "sha256": "7b20afe6b6ca6ce5f6de7867185e6d1817658fc4fef0f38d5e5c860a850b09b5",
+        "binarySha256": "f0e12ab8a9c7ba636c8ef8c7b543405c29aad7d3ef16dc5603849d414e8eeeea"
       },
       {
         "target": "darwin-arm64",
-        "file": "iotk-0.0.0-dev.c9c1fcc1dd08-darwin-arm64.tar.gz",
-        "size": 3559809,
-        "sha256": "efaf4519f8c7a848a558e250a360f37d4c5ec5570464a37e2fa56f46f82e0046",
-        "binarySha256": "e8e94b7a93473ea9bc585191ecc6f9fbdd89b2db564fdabd1242f85f187a72d7"
+        "file": "iotk-0.0.0-dev.eafd3adc73aa-darwin-arm64.tar.gz",
+        "size": 3559814,
+        "sha256": "70c371e5e9cf689f6b3fb17b77b3f3ef685e147513ecdfcaf49d5a4869f10a8a",
+        "binarySha256": "32750987731c882a8c9b863db9e7ef5bf360e185ac1dd9c8a3791e7614263095"
       },
       {
         "target": "linux-amd64",
-        "file": "iotk-0.0.0-dev.c9c1fcc1dd08-linux-amd64.tar.gz",
-        "size": 3782784,
-        "sha256": "59a882b18417827f90d142d481a629b929eedec5a74fe207767807589db85dbb",
-        "binarySha256": "5cf127edba8b9771d7c91a05f6861a18a8ac6ff8ca0d075146efabb596660f70"
+        "file": "iotk-0.0.0-dev.eafd3adc73aa-linux-amd64.tar.gz",
+        "size": 3782781,
+        "sha256": "eeb3a676ca0d0d8c8e72b74a1c07cb49ef71fb8e902bb3063b7da4b6f26629c3",
+        "binarySha256": "cc0b9f0cb4e40626ba44eec2a1dfe9a148cdeb1f761f916e736fef14fa2c25a0"
       },
       {
         "target": "linux-arm64",
-        "file": "iotk-0.0.0-dev.c9c1fcc1dd08-linux-arm64.tar.gz",
-        "size": 3409279,
-        "sha256": "711a74a669bc4667059543d5120bdcbe0d9d2d7ced79b1b53d13eb01abc95b31",
-        "binarySha256": "20d997b2907b50d5c1220264396b3ad46f2394f1da61acaf3bad544a71efd188"
+        "file": "iotk-0.0.0-dev.eafd3adc73aa-linux-arm64.tar.gz",
+        "size": 3409288,
+        "sha256": "b80fbbc6923a40a72f58309d05d26f2761ba712f5f9416589a0693c804f9dbff",
+        "binarySha256": "af5c65b1113996b10bb3560ecec494b73dcd1a21c8f11ff748908218d4f76f7a"
       },
       {
         "target": "windows-amd64",
-        "file": "iotk-0.0.0-dev.c9c1fcc1dd08-windows-amd64.zip",
-        "size": 3893200,
-        "sha256": "6630ac1858792971b50d741e2552e7cfa551c8737a20f42a1d8e92c4fcbda60f",
-        "binarySha256": "0ac9f6abb0ba3dac5b697d770048944d3b67689f688b17ed60026326de84eec5"
+        "file": "iotk-0.0.0-dev.eafd3adc73aa-windows-amd64.zip",
+        "size": 3893202,
+        "sha256": "986c292ba8634b0015c9afc6e732c668b17d55947acfd61306fc2f31eba32f91",
+        "binarySha256": "b6ee35dfb1d00807337d7f42baf569bf43dcfa465d2e5296f00e4c943b34dd73"
       },
       {
         "target": "windows-arm64",
-        "file": "iotk-0.0.0-dev.c9c1fcc1dd08-windows-arm64.zip",
-        "size": 3475053,
-        "sha256": "bc9321156c93b4ddd58196a5abf8df1294d5b7cd815ad5a2df77e894262f50b6",
-        "binarySha256": "29aac85b6070d505122235714b66568c1ced2e0c938911a7c7c5b3f23bcbc713"
+        "file": "iotk-0.0.0-dev.eafd3adc73aa-windows-arm64.zip",
+        "size": 3475056,
+        "sha256": "5c0c0cb7fb586777c3d5e7240a610eab1b2c093b84ecf25b29a3a90adeb043ad",
+        "binarySha256": "0a056b282bd1d66c8cb05a837411ae47fb827ae96774eeddd0f0f3beba5a1c7d"
       }
     ]
   },
   "provenance": {
     "repository": "boatkit-io/iotkit",
-    "buildRunId": "41383125858",
-    "buildRunNumber": 15,
-    "validationRunId": "41383125931"
+    "buildRunId": "41394977637",
+    "buildRunNumber": 16,
+    "validationRunId": "41394977735"
   },
-  "publishedAt": 1793590348850
+  "publishedAt": 1793598144000
 }
