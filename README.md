@@ -37,6 +37,8 @@ The update workflow checks hourly and can also be started manually from Actions.
 It verifies the exact manifest identity and the size and SHA-256 of all four
 macOS/Linux archives, installs and tests the native macOS package with its
 Developer ID signature and Gatekeeper assessment, then commits the new package.
+Apple's standalone-code notarization check retries ticket propagation for up to
+five minutes; it still fails closed if the ticket cannot be verified.
 Unchanged builds do not re-download the archives. Publication
 uses only this tap's repository token; it has no private source or IoTKit/cloud
 credentials. Older builds and changed identities for an existing run are rejected.
