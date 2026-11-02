@@ -39,17 +39,18 @@ class UpdateTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             self.assertTrue(updater.update(root, read))
-            formula = (root / "Formula/iotk.rb").read_text()
-            self.assertIn('version "0.0.0-dev.1"', formula)
-            self.assertEqual(formula.count('      url "https://api.iotkit.io/v1/cli-downloads/'), 4)
-            self.assertIn('pkgshare.install "licenses"', formula)
-            self.assertNotIn("windows-", formula)
+            package = (root / "Casks/iotk.rb").read_text()
+            self.assertIn('version "0.0.0-dev.1"', package)
+            self.assertEqual(package.count('      url "https://api.iotkit.io/v1/cli-downloads/'), 4)
+            self.assertIn('binary "iotk"', package)
+            self.assertNotIn("def install", package)
+            self.assertNotIn("windows-", package)
             def unchanged(path, limit):
                 self.assertEqual(path, "/v1/cli-releases")
                 return read(path, limit)
             self.assertFalse(updater.update(root, unchanged))
 
-    def test_corrupt_payload_or_manifest_never_writes_a_formula(self):
+    def test_corrupt_payload_or_manifest_never_writes_a_package(self):
         for name in ("manifest.json", "iotk-0.0.0-dev." + "a" * 12 + "-darwin-amd64.tar.gz"):
             _, payloads, read = fixture()
             payloads[name] += b"corrupt"
@@ -57,7 +58,7 @@ class UpdateTests(unittest.TestCase):
                 root = Path(directory)
                 with self.assertRaises((ValueError, json.JSONDecodeError)):
                     updater.update(root, read)
-                self.assertFalse((root / "Formula/iotk.rb").exists())
+                self.assertFalse((root / "Casks/iotk.rb").exists())
 
     def test_catalog_cannot_substitute_paths_checksums_or_repository(self):
         release, _, _ = fixture()
@@ -72,12 +73,12 @@ class UpdateTests(unittest.TestCase):
             with self.subTest(change=change), self.assertRaises(ValueError):
                 updater.validate(bad)
 
-    def test_older_build_or_replaced_identity_cannot_overwrite_current_formula(self):
+    def test_older_build_or_replaced_identity_cannot_overwrite_current_package(self):
         current, _, read = fixture(3)
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             updater.update(root, read)
-            before = (root / "Formula/iotk.rb").read_text()
+            before = (root / "Casks/iotk.rb").read_text()
             _, _, older = fixture(2)
             with self.assertRaisesRegex(ValueError, "downgrade"):
                 updater.update(root, older)
@@ -85,7 +86,7 @@ class UpdateTests(unittest.TestCase):
             bad["id"] = "b" * 64
             with self.assertRaisesRegex(ValueError, "immutable"):
                 updater.update(root, lambda path, limit: json.dumps(dict(latest=bad)).encode())
-            self.assertEqual((root / "Formula/iotk.rb").read_text(), before)
+            self.assertEqual((root / "Casks/iotk.rb").read_text(), before)
 
     def test_stable_versions_and_unknown_channels(self):
         release, _, _ = fixture(100)

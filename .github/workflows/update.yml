@@ -1,4 +1,4 @@
-name: Update verified IoTKit formula
+name: Update verified IoTKit package
 on:
   workflow_dispatch:
   schedule:
@@ -24,18 +24,18 @@ jobs:
         run: python3 -m unittest discover -s tests
       - name: Verify the public manifest and all four Homebrew archives
         run: python3 scripts/update.py
-      - name: Install and test before publishing the formula
+      - name: Install and test before publishing the package
         run: |
-          if git diff --quiet -- Formula/iotk.rb release.json; then exit 0; fi
+          if git diff --quiet -- Casks/iotk.rb release.json && [ "$GITHUB_EVENT_NAME" != workflow_dispatch ]; then exit 0; fi
           brew tap boatkit-io/tap "$GITHUB_WORKSPACE"
-          cp Formula/iotk.rb "$(brew --repository boatkit-io/tap)/Formula/iotk.rb"
-          brew install boatkit-io/tap/iotk
-          brew test boatkit-io/tap/iotk
-      - name: Commit the verified formula update
+          cp Casks/iotk.rb "$(brew --repository boatkit-io/tap)/Casks/iotk.rb"
+          brew install --cask boatkit-io/tap/iotk
+          python3 scripts/smoke.py
+      - name: Commit the verified package update
         run: |
-          if git diff --quiet -- Formula/iotk.rb release.json; then exit 0; fi
+          if git diff --quiet -- Casks/iotk.rb release.json; then exit 0; fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add Formula/iotk.rb release.json
-          git commit -m 'chore(formula): update verified iotk build'
+          git add Casks/iotk.rb release.json
+          git commit -m 'chore(package): update verified iotk build'
           git push origin HEAD:main
