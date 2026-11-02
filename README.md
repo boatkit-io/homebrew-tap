@@ -1,0 +1,53 @@
+# IoTKit Homebrew tap
+
+Install the IoTKit CLI on macOS or Linux, with Apple Silicon/ARM64 or Intel/AMD64:
+
+```sh
+brew install boatkit-io/tap/iotk
+iotk version
+iotk login --team YOUR_TEAM
+```
+
+Upgrade or remove it through Homebrew:
+
+```sh
+brew update
+brew upgrade iotk
+brew uninstall iotk
+```
+
+The tap contains package definitions. Executables and third-party notices come
+from immutable, public Cloudflare-hosted IoTKit downloads. Downloading requires
+no account; management operations require your normal IoTKit sign-in and team
+permissions. No Go, Node.js or container engine is required to run the CLI.
+
+Existing manual installations may take precedence over Homebrew in your PATH.
+Use `command -v iotk` and `brew --prefix iotk` to check which installation you run.
+
+## Versions and updates
+
+The tap follows the latest fully validated and published CLI build. Until
+upstream provides stable CLI versions, Homebrew versions are `0.0.0-dev.N`,
+where `N` is the upstream build run number. This orders upgrades reliably;
+`iotk version` reports the original upstream version and exact source revision.
+`release.json` records the public upstream identity used by the formula.
+
+The update workflow checks hourly and can also be started manually from Actions.
+It verifies the exact manifest identity and the size and SHA-256 of all four
+macOS/Linux archives, installs and tests the native macOS package, then commits
+the new formula. Unchanged builds do not re-download the archives. Publication
+uses only this tap's repository token; it has no private source or IoTKit/cloud
+credentials. Older builds and changed identities for an existing run are rejected.
+
+To update locally:
+
+```sh
+python3 -m unittest discover -s tests
+python3 scripts/update.py
+```
+
+Windows ZIP downloads are available through IoTKit's public download API; this
+Homebrew package covers macOS and Linux. Native Linux execution and every CPU
+architecture are separate qualification checks; archive verification alone does
+not qualify execution on that platform. Upstream macOS binaries are not yet
+Developer ID signed or notarized.

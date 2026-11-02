@@ -1,0 +1,41 @@
+name: Update verified IoTKit formula
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 * * * *'
+permissions:
+  contents: read
+concurrency:
+  group: update-iotk
+  cancel-in-progress: false
+jobs:
+  update:
+    if: github.ref == 'refs/heads/main'
+    runs-on: macos-15
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    env:
+      HOMEBREW_NO_AUTO_UPDATE: '1'
+      HOMEBREW_NO_ANALYTICS: '1'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Check updater integrity and ordering rules
+        run: python3 -m unittest discover -s tests
+      - name: Verify the public manifest and all four Homebrew archives
+        run: python3 scripts/update.py
+      - name: Install and test before publishing the formula
+        run: |
+          if git diff --quiet -- Formula/iotk.rb release.json; then exit 0; fi
+          brew tap boatkit-io/tap "$GITHUB_WORKSPACE"
+          cp Formula/iotk.rb "$(brew --repository boatkit-io/tap)/Formula/iotk.rb"
+          brew install boatkit-io/tap/iotk
+          brew test boatkit-io/tap/iotk
+      - name: Commit the verified formula update
+        run: |
+          if git diff --quiet -- Formula/iotk.rb release.json; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add Formula/iotk.rb release.json
+          git commit -m 'chore(formula): update verified iotk build'
+          git push origin HEAD:main
