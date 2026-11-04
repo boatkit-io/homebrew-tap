@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
 """Promote only verified, committed public IoTKit CLI builds into the tap."""
 import hashlib
+from http.client import IncompleteRead
 import json
 from pathlib import Path
 import re
+import socket
+import sys
+import time
+from urllib.error import HTTPError, URLError
 from urllib.parse import quote
 from urllib.request import Request, urlopen
 
@@ -11,15 +16,30 @@ ORIGIN = "https://api.iotkit.io"
 ROOT = Path(__file__).resolve().parent.parent
 TARGETS = {f"{system}-{arch}" for system in ("darwin", "linux", "windows") for arch in ("arm64", "amd64")}
 HEX = re.compile(r"[a-f0-9]{64}")
+FETCH_RETRY_DELAYS = (2, 4)
 
 
 def fetch(path, limit):
     request = Request(ORIGIN + path, headers={"User-Agent": "iotkit-homebrew-updater/1.0"})
-    with urlopen(request, timeout=60) as response:
-        data = response.read(limit + 1)
-    if len(data) > limit:
-        raise ValueError("Public download exceeds its admitted size")
-    return data
+    for attempt in range(len(FETCH_RETRY_DELAYS) + 1):
+        try:
+            with urlopen(request, timeout=60) as response:
+                data = response.read(limit + 1)
+            if len(data) > limit:
+                raise ValueError("Public download exceeds its admitted size")
+            return data
+        except (URLError, TimeoutError, ConnectionError, IncompleteRead) as error:
+            if isinstance(error, HTTPError):
+                retryable = error.code in (408, 429, 500, 502, 503, 504)
+                error.close()
+            else:
+                reason = error.reason if isinstance(error, URLError) else error
+                retryable = isinstance(reason, (socket.gaierror, TimeoutError, ConnectionError, IncompleteRead))
+            if not retryable or attempt == len(FETCH_RETRY_DELAYS):
+                raise
+            delay = FETCH_RETRY_DELAYS[attempt]
+            print(f"Temporary download failure; retrying in {delay}s", file=sys.stderr)
+            time.sleep(delay)
 
 
 def validate(release):

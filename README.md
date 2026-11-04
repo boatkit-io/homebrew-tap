@@ -39,9 +39,13 @@ macOS/Linux archives, installs and tests the native macOS package with its
 Developer ID signature and Gatekeeper assessment, then commits the new package.
 Apple's standalone-code notarization check retries ticket propagation for up to
 five minutes; it still fails closed if the ticket cannot be verified.
-Unchanged builds do not re-download the archives. Publication
-uses only this tap's repository token; it has no private source or IoTKit/cloud
-credentials. Older builds and changed identities for an existing run are rejected.
+Public downloads make at most three attempts for DNS/connection failures,
+timeouts, incomplete transfers and HTTP 408/429/500/502/503/504 responses, waiting
+2 then 4 seconds between attempts. Each attempt keeps the 60-second timeout and
+admitted size limit. TLS verification, other HTTP errors and release/checksum
+failures stop immediately. Unchanged builds do not re-download the archives.
+Publication uses only this tap's repository token; it has no private source or
+IoTKit/cloud credentials. Older builds and changed identities for an existing run are rejected.
 
 To update locally:
 
