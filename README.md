@@ -47,6 +47,11 @@ failures stop immediately. Unchanged builds do not re-download the archives.
 Publication uses only this tap's repository token; it has no private source or
 IoTKit/cloud credentials. Older builds and changed identities for an existing run are rejected.
 
+The native hardware smoke checks the public response's shape and unique board/
+medium and compatibility identities, allowing the upstream profile count to grow.
+Upstream source validation owns matrix completeness; the tap verifies the exact
+published package and its native execution without copying private platform source.
+
 To update locally:
 
 ```sh

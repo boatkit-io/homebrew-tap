@@ -7,6 +7,21 @@ import subprocess
 import time
 
 
+def check_hardware(hardware):
+    if not isinstance(hardware, list) or not 1 <= len(hardware) <= 64:
+        raise ValueError("Installed CLI returned an invalid offline hardware list")
+    paths, identities = set(), set()
+    for profile in hardware:
+        if not isinstance(profile, dict) or any(not isinstance(profile.get(key), str) or not profile[key] for key in ("board", "medium", "compatibility", "boot")) or not isinstance(profile.get("qualified"), bool):
+            raise ValueError("Installed CLI returned an invalid offline hardware profile")
+        path, identity = (profile["board"], profile["medium"]), profile["compatibility"]
+        if path in paths or identity in identities:
+            raise ValueError("Installed CLI returned duplicate offline hardware identities")
+        paths.add(path)
+        identities.add(identity)
+    return len(hardware)
+
+
 def check_notarization(binary, *, run=subprocess.run, now=time.monotonic, pause=time.sleep, budget=300, interval=15):
     deadline = now() + budget
     attempt = 0
@@ -45,11 +60,10 @@ def main():
     if actual != expected:
         raise ValueError("Installed executable identity differs from the published build")
     hardware = json.loads(subprocess.check_output([str(binary), "hardware"], text=True))
-    if not isinstance(hardware, list) or len(hardware) != 6:
-        raise ValueError("Installed CLI cannot read its six offline hardware profiles")
+    count = check_hardware(hardware)
     if not list((binary.resolve().parent / "licenses").glob("*-LICENSE.txt")):
         raise ValueError("Installed package lost upstream third-party notices")
-    print(f"Native Homebrew package verified: {actual}; six hardware profiles and license notices")
+    print(f"Native Homebrew package verified: {actual}; {count} hardware profiles and license notices")
 
 
 if __name__ == "__main__":

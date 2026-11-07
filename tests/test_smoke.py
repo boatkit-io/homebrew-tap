@@ -9,6 +9,29 @@ smoke = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(smoke)
 
 
+class HardwareTests(unittest.TestCase):
+    def profiles(self, count):
+        return [dict(board=f"board-{i}", medium="sd", compatibility=f"fixture-{i}", boot="fixture boot", qualified=False) for i in range(count)]
+
+    def test_profile_count_can_grow_without_replacing_the_upstream_matrix(self):
+        for count in (6, 8, 9, 64):
+            with self.subTest(count=count):
+                self.assertEqual(smoke.check_hardware(self.profiles(count)), count)
+
+    def test_empty_unbounded_or_malformed_metadata_is_rejected(self):
+        for hardware in (None, {}, [], self.profiles(65), [None], [{}], [dict(self.profiles(1)[0], qualified="false")]):
+            with self.subTest(hardware=hardware):
+                with self.assertRaises(ValueError):
+                    smoke.check_hardware(hardware)
+
+    def test_duplicate_paths_or_compatibility_identities_are_rejected(self):
+        first, second = self.profiles(2)
+        for profile in (dict(second, board=first["board"]), dict(second, compatibility=first["compatibility"])):
+            with self.subTest(profile=profile):
+                with self.assertRaisesRegex(ValueError, "duplicate"):
+                    smoke.check_hardware([first, profile])
+
+
 class TicketTests(unittest.TestCase):
     def test_ticket_propagation_retries_the_full_requirement_before_acceptance(self):
         elapsed, sleeps, calls = [0], [], []
