@@ -3,27 +3,27 @@ cask "iotk" do
   name "IoTKit CLI"
   desc "Provision and manage IoTKit devices"
   homepage "https://iotkit.io"
-  version "0.0.0-dev.25"
+  version "0.0.0-dev.26"
 
   on_macos do
     on_arm do
-      url "https://api.iotkit.io/v1/cli-downloads/c926cbe89a6eaf80c90d2aa8443612ace81234d0f622b9cf2932cc3207d9d4e7/iotk-0.0.0-dev.c392f4540c04-darwin-arm64.tar.gz"
-      sha256 "192f8d5145cc1ace411714b3dd904ea585bb2bdb62d1a26f7f699a499d7bf790"
+      url "https://api.iotkit.io/v1/cli-downloads/9b0068f7a568b2352639709ade71e19c9e7ab08e98755980d674fa9be5b58fb5/iotk-0.0.0-dev.e933b97c4511-darwin-arm64.tar.gz"
+      sha256 "611b6fa8a3758108406720ec6bcdc55755d1fa76f8a3c07a2255f6b395980fd5"
     end
     on_intel do
-      url "https://api.iotkit.io/v1/cli-downloads/c926cbe89a6eaf80c90d2aa8443612ace81234d0f622b9cf2932cc3207d9d4e7/iotk-0.0.0-dev.c392f4540c04-darwin-amd64.tar.gz"
-      sha256 "e48585fa30295f1e12772ff89b10d6fb3c09010ef4dc7b960ab8d68c36723cff"
+      url "https://api.iotkit.io/v1/cli-downloads/9b0068f7a568b2352639709ade71e19c9e7ab08e98755980d674fa9be5b58fb5/iotk-0.0.0-dev.e933b97c4511-darwin-amd64.tar.gz"
+      sha256 "a03e06639def46011482521c8a5976138db008a9d7d4b5d8fdb0bc4c124263b1"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://api.iotkit.io/v1/cli-downloads/c926cbe89a6eaf80c90d2aa8443612ace81234d0f622b9cf2932cc3207d9d4e7/iotk-0.0.0-dev.c392f4540c04-linux-arm64.tar.gz"
-      sha256 "9e6b999bb7b7488cf5aab90589dade2f987471959dd386fe4caf52189085718e"
+      url "https://api.iotkit.io/v1/cli-downloads/9b0068f7a568b2352639709ade71e19c9e7ab08e98755980d674fa9be5b58fb5/iotk-0.0.0-dev.e933b97c4511-linux-arm64.tar.gz"
+      sha256 "e6927c2eaeb95f2945e5d45b910b11b726647c30ef159834b99dcb04dc6cccbc"
     end
     on_intel do
-      url "https://api.iotkit.io/v1/cli-downloads/c926cbe89a6eaf80c90d2aa8443612ace81234d0f622b9cf2932cc3207d9d4e7/iotk-0.0.0-dev.c392f4540c04-linux-amd64.tar.gz"
-      sha256 "b84d4f8fd39ee93d75d4e9423b3d4e7ef2f15b79a43062efa68c279a80d05d4e"
+      url "https://api.iotkit.io/v1/cli-downloads/9b0068f7a568b2352639709ade71e19c9e7ab08e98755980d674fa9be5b58fb5/iotk-0.0.0-dev.e933b97c4511-linux-amd64.tar.gz"
+      sha256 "afa1d0eb3f4d10e30b123fae22d547f8fa0795eede5ed0bd301a3866b0e7a300"
     end
   end
 
